@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pon Aung — Applied Physics & Engineering Portfolio</title>
+<meta name="description" content="Applied physics portfolio for Pon Aung: experimental physics, mechanical design, robotics, sensors, data analysis, and machine learning projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #111111;
+    --navy2: #161616;
+    --red: #c8102e;
+    --off-white: #ede9e1;
+    --muted: #807e79;
+    --bright: #b8b4ac;
+    --card: #1a1a1a;
+    --card-hover: #1e1e1e;
+    --border: rgba(200,16,46,0.18);
+    --border-subtle: rgba(255,255,255,0.06);
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--off-white);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 256px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.55;
+  }
+
+  ::selection { background: var(--red); color: #fff; }
+  a { color: inherit; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3.5rem;
+    background: rgba(17,17,17,0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: padding 0.35s, background 0.35s;
+  }
+  nav.scrolled { padding: 0.75rem 3.5rem; background: rgba(17,17,17,0.92); }
+
+  .nav-logo {
+    font-family: var(--mono); font-size: 0.72rem;
+    color: var(--red); letter-spacing: 0.18em;
+    text-transform: uppercase; text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--muted); text-decoration: none;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.25s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--red); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--off-white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .hamburger {
+    display: none; background: none; border: none;
+    cursor: pointer; padding: 6px; flex-direction: column; gap: 5px;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 1.5px;
+    background: var(--off-white); transition: all 0.3s; transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: rgba(17,17,17,0.97); backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--display); font-size: 2.5rem;
+    color: var(--off-white); text-decoration: none;
+    letter-spacing: 0.06em; transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--red); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    padding: 8rem 3.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute; bottom: -3rem; right: -1.5rem;
+    font-family: var(--display);
+    font-size: clamp(8rem, 20vw, 22rem);
+    color: rgba(200,16,46,0.03);
+    line-height: 1; user-select: none; pointer-events: none;
+  }
+
+  .hero-grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,16,46,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,16,46,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at 75% 45%, black 20%, transparent 65%);
+    -webkit-mask-image: radial-gradient(ellipse at 75% 45%, black 20%, transparent 65%);
+  }
+
+  .hero-glow {
+    position: absolute; top: 20%; right: -5%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,16,46,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--red); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 2rem; height: 1px; background: var(--red);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(4.5rem, 8vw, 8rem);
+    line-height: 0.9; letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+  h1 span { color: var(--red); }
+
+  .hero-desc {
+    font-size: 1rem; line-height: 1.75;
+    color: var(--muted); max-width: 420px; margin-bottom: 2.2rem;
+  }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.5rem; }
+  .tag {
+    font-family: var(--mono); font-size: 0.64rem;
+    letter-spacing: 0.1em; padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border); color: var(--muted);
+    text-transform: uppercase; transition: border-color 0.3s, color 0.3s;
+  }
+  .tag:hover { border-color: var(--red); color: var(--bright); }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; padding: 0.85rem 2rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: all 0.25s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--red); color: #fff; }
+  .btn-primary:hover { background: #a50e26; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--off-white);
+    border: 1px solid rgba(237,233,225,0.2);
+  }
+  .btn-secondary:hover {
+    border-color: var(--off-white);
+    background: rgba(237,233,225,0.04);
+    transform: translateY(-1px);
+  }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; gap: 1.2rem;
+    padding-left: 4rem;
+  }
+
+  .stat-block {
+    border-left: 2px solid var(--red); padding-left: 1.5rem;
+    opacity: 0; transform: translateY(16px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .stat-block:nth-child(1) { animation-delay: 0.3s; }
+  .stat-block:nth-child(2) { animation-delay: 0.45s; }
+  .stat-block:nth-child(3) { animation-delay: 0.6s; }
+  .stat-block:nth-child(4) { animation-delay: 0.75s; }
+
+  .stat-num { font-family: var(--display); font-size: 2.6rem; line-height: 1; }
+  .stat-label {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--muted); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-top: 0.25rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 3.5rem; }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3.5rem;
+  }
+  .section-num {
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--red); letter-spacing: 0.15em;
+  }
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    letter-spacing: 0.04em; line-height: 1;
+  }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--navy2); }
+
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+  .exp-card {
+    background: var(--card); padding: 2.5rem;
+    border: 1px solid var(--border-subtle);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .exp-card:hover { border-color: var(--border); transform: translateY(-2px); }
+
+  .exp-card-eyebrow {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--red); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .exp-card h3 { font-family: var(--sans); font-weight: 500; font-size: 1.15rem; margin-bottom: 0.35rem; }
+  .exp-card-date {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--muted); letter-spacing: 0.08em; margin-bottom: 1rem;
+  }
+  .exp-card p { font-size: 0.88rem; line-height: 1.7; color: var(--muted); }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--navy); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1px; background: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .project-card {
+    background: var(--card); padding: 2.5rem;
+    position: relative; overflow: hidden;
+    transition: background 0.3s, transform 0.25s; cursor: pointer;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--red);
+    transition: height 0.35s;
+  }
+  .project-card:hover { background: var(--card-hover); transform: translateY(-2px); }
+  .project-card:hover::before { height: 100%; }
+
+  .project-card-num {
+    font-family: var(--display); font-size: 3.5rem;
+    color: rgba(200,16,46,0.08); line-height: 1;
+    margin-bottom: 0.8rem; transition: color 0.3s;
+  }
+  .project-card:hover .project-card-num { color: rgba(200,16,46,0.16); }
+
+  .project-card-type {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--red); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 0.65rem;
+  }
+  .project-card h3 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: 1.15rem; line-height: 1.3; margin-bottom: 0.9rem;
+  }
+  .project-card p {
+    font-size: 0.86rem; line-height: 1.7;
+    color: var(--muted); margin-bottom: 1.5rem;
+  }
+
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .project-tag {
+    font-family: var(--mono); font-size: 0.58rem;
+    padding: 0.22rem 0.55rem;
+    background: rgba(200,16,46,0.07); color: var(--red);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid rgba(200,16,46,0.14);
+  }
+
+
+
+  .project-action {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--bright);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.8;
+    transition: color 0.25s, transform 0.25s, opacity 0.25s;
+  }
+  .project-card:hover .project-action,
+  .project-card:focus-visible .project-action {
+    color: var(--red);
+    opacity: 1;
+    transform: translateX(3px);
+  }
+  .project-card:focus-visible {
+    outline: 1px solid var(--red);
+    outline-offset: -6px;
+  }
+
+  /* ── PROJECT DETAIL MODAL ── */
+  body.modal-open { overflow: hidden; }
+  .project-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+  }
+  .project-modal.open { display: block; }
+  .project-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .project-modal-panel {
+    position: relative;
+    width: min(980px, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    margin: 1rem auto;
+    background: #141414;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    overflow-y: auto;
+    animation: modalIn 0.22s ease both;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .project-modal-top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    background: rgba(20,20,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .project-modal-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--red);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .project-close {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(237,233,225,0.18);
+    background: transparent;
+    color: var(--off-white);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .project-close:hover { border-color: var(--red); background: rgba(200,16,46,0.08); }
+  .project-modal-body { padding: 2.2rem; }
+  .project-modal-title {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: 0.035em;
+    margin-bottom: 0.7rem;
+  }
+  .project-modal-subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 760px;
+    margin-bottom: 1.6rem;
+  }
+  .project-modal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .project-detail-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  .project-detail-box {
+    border: 1px solid var(--border-subtle);
+    background: rgba(255,255,255,0.02);
+    padding: 1.4rem;
+  }
+  .project-detail-box h4,
+  .project-detail-section h4 {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+  .project-detail-box p,
+  .project-detail-section p {
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 0.9rem;
+  }
+  .project-detail-section { margin-top: 1.8rem; }
+  .project-detail-list {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .project-detail-list li {
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 0.9rem;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .project-detail-list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    background: var(--red);
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+  }
+  .project-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .project-metric {
+    border-left: 2px solid var(--red);
+    background: rgba(200,16,46,0.045);
+    padding: 0.9rem 1rem;
+  }
+  .project-metric strong {
+    display: block;
+    font-family: var(--display);
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--off-white);
+    letter-spacing: 0.03em;
+  }
+  .project-metric span {
+    display: block;
+    margin-top: 0.35rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .project-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--navy2);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+
+  .about-body p {
+    font-size: 0.92rem; line-height: 1.85;
+    color: var(--muted); margin-bottom: 1.2rem;
+  }
+  .about-body p strong { color: var(--off-white); font-weight: 500; }
+
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .skill-group-label {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--red); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 0.7rem;
+    padding-bottom: 0.45rem; border-bottom: 1px solid var(--border);
+  }
+  .skill-list {
+    list-style: none; display: flex; flex-direction: column; gap: 0.3rem;
+  }
+  .skill-list li {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--muted); display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .skill-list li::before { content: '\2014'; color: var(--red); font-size: 0.6rem; }
+  .skill-list li:hover { color: var(--bright); }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--navy); text-align: center;
+    padding: 7rem 3.5rem; position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: ''; position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,16,46,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+  .contact-inner h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 1rem; }
+  .contact-inner p {
+    color: var(--muted); font-size: 0.92rem;
+    line-height: 1.75; margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 3.5rem;
+    border-top: 1px solid var(--border-subtle);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--muted); letter-spacing: 0.1em;
+  }
+  footer span { color: var(--red); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-left { animation: fadeUp 0.65s ease 0.15s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+
+    .project-detail-grid { grid-template-columns: 1fr; }
+    .project-modal-body { padding: 1.4rem; }
+    .project-metric-grid { grid-template-columns: 1fr; }
+    .project-modal-panel { width: calc(100vw - 1rem); max-height: calc(100vh - 1rem); margin: 0.5rem auto; }
+
+    nav { padding: 0.9rem 1.5rem; }
+    nav.scrolled { padding: 0.7rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    #hero {
+      grid-template-columns: 1fr;
+      padding: 7rem 1.5rem 3rem;
+      gap: 3rem; min-height: auto;
+    }
+    h1 { font-size: clamp(3.5rem, 14vw, 5.5rem); }
+    .hero-right { padding-left: 0; }
+    .hero-glow { display: none; }
+
+    section { padding: 4rem 1.5rem; }
+    .exp-grid { grid-template-columns: 1fr; }
+    #about { grid-template-columns: 1fr; gap: 3rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+
+    footer {
+      flex-direction: column; gap: 0.4rem;
+      text-align: center; padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-tags { gap: 0.35rem; }
+    .tag { font-size: 0.58rem; padding: 0.25rem 0.55rem; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; justify-content: center; }
+    .stat-num { font-size: 2.2rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-links { flex-direction: column; align-items: center; }
+    .contact-links .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">PA — Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#experience" onclick="toggleMenu()">Experience</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-bg-text">PHYSICS</div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">The Ohio State University · Physics BS · Applied Physics Focus</div>
+    <h1>PON<br><span>AUNG</span></h1>
+    <p class="hero-desc">
+      Applied physics student building at the intersection of
+      experimental physics, mechanical design, robotics, and machine learning.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Mechanical Engineering</span>
+      <span class="tag">Robotics</span>
+      <span class="tag">Data Science</span>
+      <span class="tag">ML / AI</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="mailto:aung.16@buckeyemail.osu.edu" class="btn btn-secondary">Get in Touch</a>
+      <a href="Engineering_Portfolio.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Portfolio PDF ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-block">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Portfolio Projects</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">OSU</div>
+      <div class="stat-label">Physics BS · College of Engineering</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">ML</div>
+      <div class="stat-label">Python · TensorFlow · scikit-learn</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">CAD</div>
+      <div class="stat-label">SolidWorks · Shapr3D · CNC Machining</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header fade-in">
+    <span class="section-num">01</span>
+    <h2>EXPERIENCE</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-grid">
+    <div class="exp-card fade-in">
+      <div class="exp-card-eyebrow">Honda Development & Manufacturing</div>
+      <h3>Capstone Team Member — BEV Thermal Runaway Detection</h3>
+      <div class="exp-card-date">Aug 2024 — May 2025 · Marysville, OH</div>
+      <p>
+        Led sensor validation for Honda's BEV battery assembly line as part of a six-person
+        multidisciplinary capstone. Evaluated four detection technologies — pyrometer, thermal
+        MEMS, HF gas, and ultrasonic — under a $3,500 budget with full ANOVA statistical
+        analysis. Delivered deployment recommendations to Honda's BEV engineering team.
+      </p>
+    </div>
+    <div class="exp-card fade-in">
+      <div class="exp-card-eyebrow">OSU Underwater Robotics (UWRT)</div>
+      <h3>Mechanical Team Member — Talos AUV</h3>
+      <div class="exp-card-date">Dec 2025 — Present · Columbus, OH</div>
+      <p>
+        Design and fabricate hull and chassis components in SolidWorks for OSU's RoboSub
+        competition vehicle. Redesigned torpedo launcher servo housings in Delrin with
+        built-in mechanical seals and a custom gearbox, eliminating all water-damage risk
+        from the previous design.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-in">
+    <span class="section-num">02</span>
+    <h2>PROJECTS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-card fade-in" role="button" tabindex="0" data-project="honda" onclick="openProject('honda')" onkeydown="handleProjectKey(event, 'honda')">
+      <div class="project-card-num">01</div>
+      <div class="project-card-type">Multidisciplinary Capstone · Honda</div>
+      <h3>BEV Thermal Runaway Detection</h3>
+      <p>
+        Evaluated four sensor technologies for Honda's Marysville Auto Plant BEV assembly
+        line. Designed validation experiments including ultrasonic pulse-echo with ANOVA
+        analysis (p&nbsp;=&nbsp;1.91&times;10&#8315;&#8308;), and delivered a layered multi-sensor
+        deployment strategy under a $3,500 budget.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">MATLAB</span>
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Ultrasonic NDT</span>
+        <span class="project-tag">ANOVA</span>
+        <span class="project-tag">Sensor Fusion</span>
+      </div>
+      <div class="project-action" aria-hidden="true">View full project →</div>
+    </div>
+
+    <div class="project-card fade-in" role="button" tabindex="0" data-project="talos" onclick="openProject('talos')" onkeydown="handleProjectKey(event, 'talos')">
+      <div class="project-card-num">02</div>
+      <div class="project-card-type">Robotics · OSU UWRT</div>
+      <h3>Talos AUV — Underwater Robotics</h3>
+      <p>
+        Mechanical team member on OSU's RoboSub competition vehicle. Designed hull components
+        in SolidWorks, redesigned torpedo launcher servo housing in Delrin to eliminate
+        water-damage risk, and built a custom gearbox restoring full servo range of motion.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">SolidWorks</span>
+        <span class="project-tag">CNC Machining</span>
+        <span class="project-tag">3D Printing</span>
+        <span class="project-tag">Systems Integration</span>
+      </div>
+      <div class="project-action" aria-hidden="true">View full project →</div>
+    </div>
+
+    <div class="project-card fade-in" role="button" tabindex="0" data-project="weather" onclick="openProject('weather')" onkeydown="handleProjectKey(event, 'weather')">
+      <div class="project-card-num">03</div>
+      <div class="project-card-type">Machine Learning · Physics 5680</div>
+      <h3>Weather Forecasting with ML</h3>
+      <p>
+        End-to-end ML pipeline on 50+ years of Columbus NOAA data. Engineered 12
+        temporal features and compared Ridge Regression vs. Random Forest — achieving
+        R&sup2;&nbsp;=&nbsp;0.82 with the top feature (TMAX_roll7) carrying 66.9% importance.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">scikit-learn</span>
+        <span class="project-tag">NOAA API</span>
+        <span class="project-tag">Feature Engineering</span>
+        <span class="project-tag">Random Forest</span>
+      </div>
+      <div class="project-action" aria-hidden="true">View full project →</div>
+    </div>
+
+    <div class="project-card fade-in" role="button" tabindex="0" data-project="rubidium" onclick="openProject('rubidium')" onkeydown="handleProjectKey(event, 'rubidium')">
+      <div class="project-card-num">04</div>
+      <div class="project-card-type">Experimental Physics · Physics 5700</div>
+      <h3>Saturated Absorption Spectroscopy of Rubidium</h3>
+      <p>
+        Resolved hyperfine structure of &#8312;&#8309;Rb and &#8312;&#8311;Rb D2 lines at
+        780.2&nbsp;nm using sub-Doppler spectroscopy. Achieved ~10&nbsp;MHz resolution against
+        a 500&nbsp;MHz Doppler background; ground-state splittings within 3% of accepted values.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Optics</span>
+        <span class="project-tag">Laser Physics</span>
+        <span class="project-tag">Python Analysis</span>
+        <span class="project-tag">Interferometry</span>
+      </div>
+      <div class="project-action" aria-hidden="true">View full project →</div>
+    </div>
+
+    <div class="project-card fade-in" role="button" tabindex="0" data-project="thermal" onclick="openProject('thermal')" onkeydown="handleProjectKey(event, 'thermal')">
+      <div class="project-card-num">05</div>
+      <div class="project-card-type">Computational Physics · Physics 5700</div>
+      <h3>Thermal Conductivity Modeling — PINNs</h3>
+      <p>
+        Modeled 1D heat diffusion in a copper rod across 5 progressive models: analytic
+        Fourier series, finite-difference (FTCS), SciPy-optimized, and Physics-Informed
+        Neural Network. PINN recovered thermal diffusivity as a learned parameter
+        (MAE&nbsp;=&nbsp;0.42&deg;C).
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">TensorFlow</span>
+        <span class="project-tag">PINNs</span>
+        <span class="project-tag">NumPy</span>
+        <span class="project-tag">SciPy</span>
+        <span class="project-tag">Chi-Squared</span>
+      </div>
+      <div class="project-action" aria-hidden="true">View full project →</div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- PROJECT DETAIL MODAL -->
+<div class="project-modal" id="projectModal" aria-hidden="true">
+  <div class="project-modal-backdrop" onclick="closeProject()"></div>
+  <article class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="project-modal-top">
+      <div class="project-modal-label" id="modalLabel">Project Details</div>
+      <button class="project-close" type="button" onclick="closeProject()" aria-label="Close project details">×</button>
+    </div>
+    <div class="project-modal-body" id="projectModalBody"></div>
+  </article>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left">
+    <div class="section-header fade-in">
+      <span class="section-num">03</span>
+      <h2>ABOUT</h2>
+    </div>
+    <div class="about-body fade-in">
+      <p>
+        I'm a <strong>Physics BS student at The Ohio State University</strong> with an
+        Engineering Science minor and an applied physics / mechanical engineering focus.
+        My coursework spans experimental physics, electronics, optics, quantum mechanics,
+        machine learning, and mechanical engineering.
+      </p>
+      <p>
+        My work lives at the boundary between physical theory and practical engineering —
+        whether that's building sensor validation pipelines for Honda's factory floor,
+        machining AUV parts in the campus machine shop, or implementing neural networks
+        that satisfy PDEs as physics constraints.
+      </p>
+      <p>
+        I'm particularly interested in <strong>mechanical engineering, robotics, data
+        science, and ML/AI</strong> applied to real physical systems — problems where
+        getting the physics right actually matters.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-right fade-in">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>SKILLS</h2>
+    </div>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-group-label">Languages & Tools</div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>MATLAB</li>
+          <li>LaTeX</li>
+          <li>Jupyter</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-label">Libraries</div>
+        <ul class="skill-list">
+          <li>TensorFlow</li>
+          <li>scikit-learn</li>
+          <li>NumPy / SciPy</li>
+          <li>Pandas</li>
+          <li>Matplotlib</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-label">Engineering</div>
+        <ul class="skill-list">
+          <li>SolidWorks</li>
+          <li>Shapr3D</li>
+          <li>CNC Machining</li>
+          <li>3D Printing</li>
+          <li>Statics / MoM</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-label">Methods</div>
+        <ul class="skill-list">
+          <li>FEA / FD Schemes</li>
+          <li>PINNs</li>
+          <li>Statistical Testing</li>
+          <li>Sensor Fusion</li>
+          <li>Signal Processing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="hero-eyebrow" style="justify-content:center; margin-bottom:1rem;">Let's Connect</div>
+    <h2 class="fade-in">GET IN<br><span style="color:var(--red)">TOUCH</span></h2>
+    <p class="fade-in">
+      Currently seeking entry-level engineering and technical roles in mechanical systems,
+      robotics, manufacturing, testing, sensors, and applied ML.
+    </p>
+    <div class="contact-links fade-in">
+      <a href="mailto:aung.16@buckeyemail.osu.edu" class="btn btn-primary">aung.16@buckeyemail.osu.edu</a>
+      <a href="https://github.com/PonAppliedPhysics" target="_blank" rel="noopener" class="btn btn-secondary">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/pon-aung-a10a6725b" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn ↗</a>
+      <a href="Engineering_Portfolio.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Portfolio PDF ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 <span>Pon Aung</span> — The Ohio State University</p>
+  <p>Physics BS · Engineering Science Minor · Applied Physics</p>
+</footer>
+
+<script>
+
+  const projectDetails = {
+  "honda": {
+    "label": "Multidisciplinary Capstone · Honda",
+    "title": "BEV Thermal Runaway Detection",
+    "subtitle": "Sensor validation project for Honda's Marysville Auto Plant focused on early detection of lithium-ion battery thermal runaway during BEV battery assembly.",
+    "links": [
+      {
+        "text": "Open PDF Section ↗",
+        "href": "Engineering_Portfolio.pdf#page=3"
+      }
+    ],
+    "overview": "Our six-person team evaluated pyrometer, thermal MEMS, HF gas, and ultrasonic sensing approaches under a $3,500 budget. The final recommendation was a layered detection strategy because no single sensor covered temperature, chemical, spatial, and internal state monitoring alone.",
+    "challenge": "The new BEV battery packs are roughly 800 lb and cannot be manually removed from the assembly line like smaller hybrid packs. The detection system also had to operate independently of existing manufacturing equipment without modifying Honda's production flow.",
+    "metrics": [
+      [
+        "4",
+        "Sensor technologies evaluated"
+      ],
+      [
+        "$1.27k",
+        "Spent of $3.5k budget"
+      ],
+      [
+        "1 MHz",
+        "Ultrasonic pulse-echo test"
+      ],
+      [
+        "p = 1.91×10⁻⁴",
+        "Charging ANOVA result"
+      ]
+    ],
+    "sections": [
+      {
+        "heading": "My Contributions",
+        "items": [
+          "Participated in the Honda Marysville Auto Plant visit and contributed to stakeholder discovery around safety-first requirements.",
+          "Helped screen 7–10 candidate detection technologies using a weighted user-needs matrix.",
+          "Designed and executed ultrasonic transducer validation experiments using MATLAB data acquisition, waveform analysis, and ANOVA testing.",
+          "Built Python post-processing scripts for sensor validation data, waveform plots, and statistical analysis.",
+          "Co-authored the detailed design report and final presentation delivered to Honda's BEV engineering team."
+        ]
+      },
+      {
+        "heading": "Technical Details",
+        "items": [
+          "Pyrometer: validated direct temperature monitoring at different stand-off distances, with better performance after black surface treatment.",
+          "Thermal MEMS: captured heating curves and spatial temperature changes, with limitations from reflective surfaces.",
+          "HF gas sensor: detected low concentration HF from a controlled reaction, supporting chemical detection as a complementary safety layer.",
+          "Ultrasonic transducer: tested battery charge and discharge states using pulse-echo measurements; aluminum casing attenuated the signal and motivated a future pitch-catch setup."
+        ]
+      },
+      {
+        "heading": "Skills Demonstrated",
+        "items": [
+          "Sensor testing, experimental design, MATLAB, Python, statistical analysis, ANOVA, technical reporting, stakeholder-driven engineering design."
+        ]
+      }
+    ],
+    "tags": [
+      "MATLAB",
+      "Python",
+      "ANOVA",
+      "Ultrasonic NDT",
+      "Sensor Fusion",
+      "Thermal Runaway"
+    ]
+  },
+  "talos": {
+    "label": "Robotics · OSU Underwater Robotics",
+    "title": "Talos AUV — Underwater Robotics",
+    "subtitle": "Mechanical design and fabrication work for OSU Underwater Robotics' autonomous underwater vehicle competing in RoboSub.",
+    "links": [
+      {
+        "text": "Open PDF Section ↗",
+        "href": "Engineering_Portfolio.pdf#page=6"
+      }
+    ],
+    "overview": "Worked on mechanical systems for Talos, including hull and chassis components, internal electronics cage interfaces, and the torpedo launcher servo housing / gearbox redesign.",
+    "challenge": "A persistent leak through the torpedo launcher's dynamic servo seals created water-damage risk and maintenance issues after RoboSub 2024. The redesign needed to improve sealing, restore full range of motion, and maintain reliable mechanical integration with the rest of the AUV.",
+    "metrics": [
+      [
+        "AUV",
+        "Autonomous underwater vehicle"
+      ],
+      [
+        "Delrin",
+        "Servo housing material"
+      ],
+      [
+        "270°",
+        "Servo controlled rotation limit"
+      ],
+      [
+        "0",
+        "Dynamic/static leaks after redesign goal"
+      ]
+    ],
+    "sections": [
+      {
+        "heading": "My Contributions",
+        "items": [
+          "Designed and fabricated hull and chassis components in SolidWorks.",
+          "Machined and prototyped parts using campus lathe, mill, and 3D-printing resources.",
+          "Contributed to the Delrin servo housing and custom gearbox redesign for the torpedo launcher.",
+          "Supported assembly, integration, and pool testing of Talos.",
+          "Coordinated with electrical and software sub-teams to verify mechanical interfaces and mounting requirements."
+        ]
+      },
+      {
+        "heading": "Technical Details",
+        "items": [
+          "New servo housings used built-in mechanical seals to reduce both dynamic and static leak paths.",
+          "A custom gearbox restored the torpedo launcher's needed range of motion despite servo rotation limits.",
+          "A structural brace added a second mounting point to reduce cantilever loading from the launcher assembly.",
+          "A guiding rod integrated into the torpedo interface improved launch stability and accuracy."
+        ]
+      },
+      {
+        "heading": "Skills Demonstrated",
+        "items": [
+          "SolidWorks, mechanical design, CAD-to-fabrication workflow, CNC machining, 3D printing, waterproofing, mechanical integration, robotics teamwork."
+        ]
+      }
+    ],
+    "tags": [
+      "SolidWorks",
+      "CNC Machining",
+      "3D Printing",
+      "Robotics",
+      "Mechanical Design",
+      "Systems Integration"
+    ]
+  },
+  "weather": {
+    "label": "Machine Learning · Physics 5680",
+    "title": "Weather Forecasting with Machine Learning",
+    "subtitle": "End-to-end machine learning pipeline using 50+ years of Columbus, Ohio weather data to predict daily temperature variables.",
+    "links": [
+      {
+        "text": "GitHub Repo ↗",
+        "href": "https://github.com/PonAppliedPhysics/weather-Machine-learning-code"
+      },
+      {
+        "text": "Open PDF Section ↗",
+        "href": "Engineering_Portfolio.pdf#page=9"
+      }
+    ],
+    "overview": "Built a practical forecasting workflow using NOAA weather observations, feature engineering, chronological train/test splitting, and model comparison between Ridge Regression and Random Forest.",
+    "challenge": "Weather data is time-dependent, so the workflow had to avoid data leakage and preserve chronological order. Temperature was more predictable from recent history than precipitation, which remained difficult from surface observations alone.",
+    "metrics": [
+      [
+        "50+ yrs",
+        "Historical NOAA data"
+      ],
+      [
+        "12",
+        "Engineered input features"
+      ],
+      [
+        "R² = 0.82",
+        "Random Forest TMAX Day+1"
+      ],
+      [
+        "66.9%",
+        "TMAX_roll7 feature importance"
+      ]
+    ],
+    "sections": [
+      {
+        "heading": "What I Built",
+        "items": [
+          "Collected and cleaned daily TMAX, TMIN, TAVG, and PRCP data for Columbus, Ohio.",
+          "Engineered rolling means, lag features, and seasonal indicators such as month and day of year.",
+          "Compared a linear Ridge Regression baseline against a non-linear Random Forest model.",
+          "Generated forecast visualizations, feature-importance plots, and model evaluation summaries."
+        ]
+      },
+      {
+        "heading": "Results",
+        "items": [
+          "Random Forest outperformed the Ridge baseline for next-day maximum temperature prediction.",
+          "The 7-day rolling average of maximum temperature was the strongest predictor, carrying 66.9% feature importance.",
+          "The model demonstrated that public weather data and standard Python tools can produce useful short-horizon temperature forecasts on a laptop."
+        ]
+      },
+      {
+        "heading": "Skills Demonstrated",
+        "items": [
+          "Python, pandas, scikit-learn, feature engineering, chronological validation, regression metrics, data visualization, model interpretation."
+        ]
+      }
+    ],
+    "tags": [
+      "Python",
+      "scikit-learn",
+      "NOAA API",
+      "Random Forest",
+      "Feature Engineering",
+      "Data Visualization"
+    ]
+  },
+  "rubidium": {
+    "label": "Experimental Physics · Physics 5700/5710",
+    "title": "Saturated Absorption Spectroscopy of Rubidium",
+    "subtitle": "Sub-Doppler laser spectroscopy experiment resolving rubidium hyperfine structure near the 780.2 nm D2 transition.",
+    "links": [
+      {
+        "text": "Open PDF Section ↗",
+        "href": "Engineering_Portfolio.pdf#page=12"
+      }
+    ],
+    "overview": "Used saturated absorption spectroscopy to resolve narrow Lamb dips beneath a broad Doppler background. A Michelson interferometer provided frequency calibration for extracting hyperfine splittings.",
+    "challenge": "Conventional transmission spectroscopy is limited by roughly 500 MHz Doppler broadening, which hides the smaller hyperfine features. The experiment required optical alignment, frequency calibration, and careful interpretation of real and crossover peaks.",
+    "metrics": [
+      [
+        "780.2 nm",
+        "Rb D2 transition"
+      ],
+      [
+        "~10 MHz",
+        "Sub-Doppler resolution"
+      ],
+      [
+        "~500 MHz",
+        "Doppler background"
+      ],
+      [
+        "<3%",
+        "Ground splitting deviation"
+      ]
+    ],
+    "sections": [
+      {
+        "heading": "Method",
+        "items": [
+          "Aligned counter-propagating pump and probe beams from the same tunable external-cavity diode laser.",
+          "Used saturated absorption to select near-zero-velocity atoms and reveal narrow resonance features.",
+          "Calibrated the frequency sweep with an unequal-arm Michelson interferometer with ΔL ≈ 0.35 m.",
+          "Identified both true hyperfine transitions and crossover resonances."
+        ]
+      },
+      {
+        "heading": "Results",
+        "items": [
+          "Measured the 87Rb ground-state splitting as approximately 6.65 ± 0.3 GHz compared with 6.835 GHz accepted.",
+          "Measured the 85Rb ground-state splitting as approximately 3.0 ± 0.2 GHz compared with 3.036 GHz accepted.",
+          "Confirmed that saturated absorption resolves atomic energy splittings far below the Doppler width."
+        ]
+      },
+      {
+        "heading": "Skills Demonstrated",
+        "items": [
+          "Optics alignment, laser spectroscopy, interferometry, uncertainty analysis, Python data analysis, experimental physics reporting."
+        ]
+      }
+    ],
+    "tags": [
+      "Optics",
+      "Laser Physics",
+      "Interferometry",
+      "Python Analysis",
+      "Uncertainty",
+      "Atomic Physics"
+    ]
+  },
+  "thermal": {
+    "label": "Computational Physics · Physics 5700",
+    "title": "Thermal Conductivity Modeling — PINNs",
+    "subtitle": "Computational modeling of 1D heat diffusion in a copper rod using analytic, finite-difference, optimized, and Physics-Informed Neural Network approaches.",
+    "links": [
+      {
+        "text": "GitHub Repo ↗",
+        "href": "https://github.com/PonAppliedPhysics/Thermoconductivity-and-PINNS"
+      },
+      {
+        "text": "Open PDF Section ↗",
+        "href": "Engineering_Portfolio.pdf#page=13"
+      }
+    ],
+    "overview": "Modeled cooling behavior in an 84.25 cm copper rod instrumented with 11 Type-T thermocouples. The project compared five model levels, from closed-form Fourier series to a TensorFlow PINN that learned thermal diffusivity while satisfying the heat equation.",
+    "challenge": "Simple analytic and finite-difference models failed when the boundary conditions did not match the actual experiment. Model accuracy improved dramatically once measured boundary thermocouple data and optimized radial heat loss were included.",
+    "metrics": [
+      [
+        "84.25 cm",
+        "Copper rod length"
+      ],
+      [
+        "11",
+        "Thermocouples"
+      ],
+      [
+        "5",
+        "Model levels compared"
+      ],
+      [
+        "0.42°C",
+        "PINN MAE on Run 2"
+      ]
+    ],
+    "sections": [
+      {
+        "heading": "Model Progression",
+        "items": [
+          "Model 0: closed-form Fourier series with simplified boundary conditions.",
+          "Model 1: FTCS finite-difference model with fixed cold boundaries.",
+          "Model 2 / 2b: finite-difference models using measured TC1 and TC11 boundary data.",
+          "Model 3: optimized radial heat loss coefficient using SciPy optimization.",
+          "PINN: TensorFlow model with data loss, PDE residual loss, initial-condition loss, and boundary-condition loss."
+        ]
+      },
+      {
+        "heading": "Results",
+        "items": [
+          "Model 3 performed best overall, followed closely by Model 2b, showing that realistic boundary conditions mattered more than model complexity alone.",
+          "The PINN achieved comparable accuracy while also recovering thermal diffusivity as a learned parameter.",
+          "Vectorizing the finite-difference model reduced runtime from minutes to roughly seconds, making parameter scans practical."
+        ]
+      },
+      {
+        "heading": "Skills Demonstrated",
+        "items": [
+          "Python, NumPy, SciPy, TensorFlow, PINNs, finite-difference methods, PDE modeling, chi-squared validation, experimental data preprocessing."
+        ]
+      }
+    ],
+    "tags": [
+      "TensorFlow",
+      "PINNs",
+      "NumPy",
+      "SciPy",
+      "FTCS",
+      "Heat Equation",
+      "Chi-Squared"
+    ]
+  }
+};
+
+
+  function makeTags(tags) {
+    return tags.map(tag => `<span class="project-tag">${tag}</span>`).join('');
+  }
+
+  function makeLinks(links) {
+    return links.map(link => `<a href="${link.href}" target="_blank" rel="noopener" class="btn btn-secondary" onclick="event.stopPropagation()">${link.text}</a>`).join('');
+  }
+
+  function makeMetrics(metrics) {
+    return metrics.map(metric => `<div class="project-metric"><strong>${metric[0]}</strong><span>${metric[1]}</span></div>`).join('');
+  }
+
+  function makeSections(sections) {
+    return sections.map(section => `
+      <div class="project-detail-section">
+        <h4>${section.heading}</h4>
+        <ul class="project-detail-list">
+          ${section.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+  }
+
+  function openProject(key) {
+    const project = projectDetails[key];
+    if (!project) return;
+
+    document.getElementById('modalLabel').textContent = project.label;
+    document.getElementById('projectModalBody').innerHTML = `
+      <h3 class="project-modal-title" id="modalTitle">${project.title}</h3>
+      <p class="project-modal-subtitle">${project.subtitle}</p>
+      <div class="project-modal-links">${makeLinks(project.links)}</div>
+      <div class="project-detail-grid">
+        <div class="project-detail-box">
+          <h4>Project Overview</h4>
+          <p>${project.overview}</p>
+          <div class="project-metric-grid">${makeMetrics(project.metrics)}</div>
+        </div>
+        <div class="project-detail-box">
+          <h4>Engineering Challenge</h4>
+          <p>${project.challenge}</p>
+          <div class="project-detail-tags">${makeTags(project.tags)}</div>
+        </div>
+      </div>
+      ${makeSections(project.sections)}
+    `;
+
+    const modal = document.getElementById('projectModal');
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    history.replaceState(null, '', `#project-${key}`);
+    setTimeout(() => document.querySelector('.project-close').focus(), 20);
+  }
+
+  function closeProject() {
+    const modal = document.getElementById('projectModal');
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (location.hash.startsWith('#project-')) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+
+  function handleProjectKey(event, key) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openProject(key);
+    }
+  }
+
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeProject();
+  });
+
+  window.addEventListener('load', () => {
+    const key = location.hash.replace('#project-', '');
+    if (projectDetails[key]) openProject(key);
+  });
+
+  // Shrink nav on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').classList.toggle('scrolled', scrollY > 40);
+  }, { passive: true });
+
+  // Fade-in on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Stagger cards
+  document.querySelectorAll('.project-card.fade-in').forEach((c, i) => c.style.transitionDelay = i * 70 + 'ms');
+  document.querySelectorAll('.exp-card.fade-in').forEach((c, i) => c.style.transitionDelay = i * 100 + 'ms');
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.querySelector('.hamburger').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
