@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pon Aung — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a1a1a;
+    --navy2: #222222;
+    --red: #BB0000;
+    --red-dim: #8b0000;
+    --off-white: #f0ece4;
+    --muted: #888888;
+    --card: #242424;
+    --border: rgba(187,0,0,0.25);
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--off-white);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--off-white); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem;
+    right: -1rem;
+    font-family: var(--display);
+    font-size: clamp(8rem, 18vw, 20rem);
+    color: rgba(200,16,46,0.04);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,16,46,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,16,46,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 80% 50%, black 30%, transparent 70%);
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--red);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(4rem, 7vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+    color: var(--off-white);
+  }
+
+  h1 span { color: var(--red); }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    display: inline-block;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: #a50e26; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--off-white);
+    border: 1px solid rgba(232,228,220,0.3);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--off-white);
+    background: rgba(232,228,220,0.05);
+  }
+
+  /* Hero right panel */
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 4rem;
+  }
+
+  .stat-block {
+    border-left: 2px solid var(--red);
+    padding-left: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .stat-block:nth-child(1) { animation-delay: 0.2s; }
+  .stat-block:nth-child(2) { animation-delay: 0.35s; }
+  .stat-block:nth-child(3) { animation-delay: 0.5s; }
+  .stat-block:nth-child(4) { animation-delay: 0.65s; }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 2.8rem;
+    color: var(--off-white);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  /* ─── SECTION BASICS ─── */
+  section { padding: 6rem 4rem; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--navy2); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--card);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+    cursor: default;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--red);
+    transition: height 0.3s ease;
+  }
+
+  .project-card:hover { background: #1a2438; }
+  .project-card:hover::before { height: 100%; }
+
+  .project-card-num {
+    font-family: var(--display);
+    font-size: 4rem;
+    color: rgba(200,16,46,0.12);
+    line-height: 1;
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+  }
+
+  .project-card:hover .project-card-num { color: rgba(200,16,46,0.2); }
+
+  .project-card-type {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-card h3 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: var(--off-white);
+  }
+
+  .project-card p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(200,16,46,0.1);
+    color: var(--red);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(200,16,46,0.2);
+  }
+
+  /* ─── CAD GALLERY ─── */
+  #cad { background: var(--navy); }
+
+  .cad-intro {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 680px;
+    margin-bottom: 2rem;
+  }
+
+  .cad-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cad-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .cad-item:hover {
+    border-color: var(--red);
+    transform: translateY(-4px);
+  }
+
+  .cad-item.wide {
+    grid-column: span 2;
+  }
+
+  .cad-img-wrap {
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .cad-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .cad-item:hover .cad-img-wrap img {
+    transform: scale(1.03);
+  }
+
+  .cad-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cad-img-wrap:hover .cad-img-overlay {
+    opacity: 1;
+  }
+
+  .cad-img-overlay span {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #fff;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+
+  .cad-caption {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .cad-caption-type {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .cad-caption h3 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--off-white);
+    margin-bottom: 0.4rem;
+  }
+
+  .cad-caption p {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* ─── CAD LIGHTBOX ─── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    cursor: zoom-out;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: color 0.2s;
+  }
+
+  .lightbox-close:hover { color: var(--off-white); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-body p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .about-body p strong { color: var(--off-white); font-weight: 500; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .skill-list li {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-list li::before {
+    content: '—';
+    color: var(--red);
+    font-size: 0.6rem;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--navy2);
+    text-align: center;
+    padding: 7rem 4rem;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-inner h2 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    margin-bottom: 1rem;
+  }
+
+  .contact-inner p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  footer span { color: var(--red); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-left { animation: fadeUp 0.7s ease 0.1s both; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-right { padding-left: 0; }
+    section { padding: 4rem 1.5rem; }
+    #about { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .cad-gallery { grid-template-columns: 1fr; }
+    .cad-item.wide { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">PA — Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#cad">CAD</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://github.com/PonAppliedPhysics/PonAppliedPhysics.github.io/tree/main/images" target="_blank">Images Folder ↗</a></li>
+    <li><a href="Engineering_Portfolio.pdf" target="_blank">Full PDF ↗</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-bg-text">PHYSICS</div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">The Ohio State University</div>
+    <h1>PON<br><span>AUNG</span></h1>
+    <p class="hero-desc">
+      Physics student and engineer building at the intersection of
+      experimental physics, mechanical design, and machine learning.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Mechanical Engineering</span>
+      <span class="tag">Robotics</span>
+      <span class="tag">Data Science</span>
+      <span class="tag">ML / AI</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="Engineering_Portfolio.pdf" target="_blank" class="btn btn-secondary">Download Portfolio</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-block">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Portfolio Projects</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">OSU</div>
+      <div class="stat-label">Physics BS — College of Engineering</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">ML</div>
+      <div class="stat-label">Python · TensorFlow · scikit-learn</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">CAD</div>
+      <div class="stat-label">SolidWorks · Shapr3D · Machining</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-header fade-in">
+    <span class="section-num">01</span>
+    <h2>PROJECTS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-card fade-in">
+      <div class="project-card-num">01</div>
+      <div class="project-card-type">Multidisciplinary Capstone · Honda</div>
+      <h3>BEV Thermal Runaway Detection</h3>
+      <p>
+        Led sensor validation for Honda's Marysville Auto Plant BEV assembly line.
+        Evaluated four detection technologies — pyrometer, thermal MEMS, HF gas sensor,
+        and ultrasonic transducer — under a $3,500 budget with full ANOVA statistical analysis.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">MATLAB</span>
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Ultrasonic NDT</span>
+        <span class="project-tag">ANOVA</span>
+        <span class="project-tag">Sensor Fusion</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-card-num">02</div>
+      <div class="project-card-type">Robotics · OSU UWRT</div>
+      <h3>Talos AUV — Underwater Robotics</h3>
+      <p>
+        Mechanical team member on OSU's RoboSub competition vehicle. Designed hull components
+        in SolidWorks, redesigned torpedo launcher servo housing in Delrin to eliminate water-damage
+        risk, and built a custom gearbox restoring full servo range of motion.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">SolidWorks</span>
+        <span class="project-tag">CNC Machining</span>
+        <span class="project-tag">3D Printing</span>
+        <span class="project-tag">Systems Integration</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-card-num">03</div>
+      <div class="project-card-type">Machine Learning · Physics 5680</div>
+      <h3>Weather Forecasting with ML</h3>
+      <p>
+        End-to-end ML pipeline on 50+ years of Columbus NOAA data. Engineered 12 temporal
+        features and compared Ridge Regression vs. Random Forest — achieving R² = 0.82 with
+        the top feature (TMAX_roll7) carrying 66.9% of importance.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">scikit-learn</span>
+        <span class="project-tag">NOAA API</span>
+        <span class="project-tag">Feature Engineering</span>
+        <span class="project-tag">Random Forest</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-card-num">04</div>
+      <div class="project-card-type">Experimental Physics · Physics 5700</div>
+      <h3>Saturated Absorption Spectroscopy of Rubidium</h3>
+      <p>
+        Resolved hyperfine structure of ⁸⁵Rb and ⁸⁷Rb D2 lines at 780.2 nm using
+        sub-Doppler spectroscopy. Achieved ~10 MHz resolution against a 500 MHz Doppler
+        background; ground-state splittings within 3% of accepted values.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Optics</span>
+        <span class="project-tag">Laser Physics</span>
+        <span class="project-tag">Python Analysis</span>
+        <span class="project-tag">Interferometry</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-card-num">05</div>
+      <div class="project-card-type">Computational Physics · Physics 5700</div>
+      <h3>Thermal Conductivity Modeling — PINNs</h3>
+      <p>
+        Modeled 1D heat diffusion in a copper rod across 5 progressive models: analytic Fourier
+        series → finite-difference (FTCS) → SciPy-optimized → Physics-Informed Neural Network.
+        PINN recovered thermal diffusivity as a learned parameter (MAE = 0.42°C).
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">TensorFlow</span>
+        <span class="project-tag">PINNs</span>
+        <span class="project-tag">NumPy</span>
+        <span class="project-tag">SciPy</span>
+        <span class="project-tag">Chi-Squared</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-card-num">06</div>
+      <div class="project-card-type">Product Design · First Year Engineering</div>
+      <h3>Vibrating Pillow Sleeve Alarm Clock</h3>
+      <p>
+        Group product design project — an Arduino-controlled alarm clock embedded in a pillow sleeve
+        using four micro vibration motors and rechargeable 9V batteries. Modeled the full assembly
+        in SolidWorks with exploded view, BOM, and multi-view dimensioned drawings.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">SolidWorks</span>
+        <span class="project-tag">Arduino</span>
+        <span class="project-tag">Product Design</span>
+        <span class="project-tag">Assembly Modeling</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="cad">
+  <div class="section-header fade-in">
+    <span class="section-num">02</span>
+    <h2>CAD & TECHNICAL DRAWINGS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="cad-intro fade-in">
+    Selections from engineering coursework and design work at Ohio State — assembly drawings,
+    product design, and GD&T-style technical drawings created in SolidWorks. Click any drawing to view full-size.
+  </p>
+
+  <div class="fade-in" style="margin-bottom: 3rem;">
+    <a href="https://github.com/PonAppliedPhysics/PonAppliedPhysics.github.io/tree/main/images" target="_blank" class="btn btn-secondary">
+      Browse All CAD Assets on GitHub ↗
+    </a>
+  </div>
+
+  <div class="cad-gallery">
+
+    <div class="cad-item wide fade-in">
+      <div class="cad-img-wrap" onclick="openLightbox(this)">
+        <img src="images/foot_subassembly.png" alt="Foot Subassembly — SolidWorks Assembly Drawing" loading="lazy">
+        <div class="cad-img-overlay"><span>View Full Size</span></div>
+      </div>
+      <div class="cad-caption">
+        <div class="cad-caption-type">Assembly Drawing · SolidWorks</div>
+        <h3>Foot Subassembly</h3>
+        <p>Three-part assembly drawing with BOM (foot blade, foot tube, foot stem). Fully dimensioned with true radii callouts, diameters, and isometric views. Scale 1:10.</p>
+      </div>
+    </div>
+
+    <div class="cad-item fade-in">
+      <div class="cad-img-wrap" onclick="openLightbox(this)">
+        <img src="images/ExplodedPillow.png" alt="Vibrating Pillow Sleeve Alarm Clock — Exploded Assembly View" loading="lazy">
+        <div class="cad-img-overlay"><span>View Full Size</span></div>
+      </div>
+      <div class="cad-caption">
+        <div class="cad-caption-type">Product Design · Exploded Assembly</div>
+        <h3>Vibrating Pillow Sleeve Alarm Clock</h3>
+        <p>Exploded view with bill of materials — Arduino-controlled micro vibration motors, 9V battery system, and acrylic enclosure. First-year engineering group project.</p>
+      </div>
+    </div>
+
+    <div class="cad-item fade-in">
+      <div class="cad-img-wrap" onclick="openLightbox(this)">
+        <img src="images/Vibrating_Pillow.png" alt="Vibrating Pillow Sleeve Alarm Clock — Multi-View Drawing" loading="lazy">
+        <div class="cad-img-overlay"><span>View Full Size</span></div>
+      </div>
+      <div class="cad-caption">
+        <div class="cad-caption-type">Product Design · Orthographic Views</div>
+        <h3>Pillow Sleeve — Multi-View Drawing</h3>
+        <p>Front, side, top, and isometric views with overall dimensions (36.99 × 19.86 × 6.16 in). Scale 1:8.</p>
+      </div>
+    </div>
+
+    <div class="cad-item fade-in">
+      <div class="cad-img-wrap" onclick="openLightbox(this)">
+        <img src="images/SquareE-Bracket_with_symmetry.png" alt="Square E-Bracket with Symmetry Planes" loading="lazy">
+        <div class="cad-img-overlay"><span>View Full Size</span></div>
+      </div>
+      <div class="cad-caption">
+        <div class="cad-caption-type">Technical Drawing · Dual Symmetry</div>
+        <h3>Square E-Bracket</h3>
+        <p>Part symmetric about planes A-A and B-B. Features R0.50 fillets, countersunk ⌀0.75 thru-holes, and R1.50 rounded profiles. Three-view + isometric projection.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕ Close</button>
+  <img id="lightbox-img" src="" alt="Full-size drawing">
+</div>
+
+<section id="about">
+  <div class="about-left">
+    <div class="section-header fade-in">
+      <span class="section-num">03</span>
+      <h2>ABOUT</h2>
+    </div>
+    <div class="about-body fade-in">
+      <p>
+        I'm a <strong>Physics BS student at The Ohio State University</strong> in the College of Engineering,
+        with coursework spanning experimental physics, optics, quantum mechanics, and mechanical engineering.
+      </p>
+      <p>
+        My work lives at the boundary between physical theory and practical engineering — whether that's
+        building sensor validation pipelines for Honda's factory floor, machining AUV parts in the campus
+        machine shop, or implementing neural networks that satisfy PDEs as physics constraints.
+      </p>
+      <p>
+        I'm particularly interested in <strong>mechanical engineering, robotics, data science, and ML/AI</strong>
+        applied to real physical systems — problems where getting the physics right actually matters.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-right fade-in">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>SKILLS</h2>
+    </div>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-group-label">Languages</div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>MATLAB</li>
+          <li>LaTeX</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-label">Libraries</div>
+        <ul class="skill-list">
+          <li>TensorFlow</li>
+          <li>scikit-learn</li>
+          <li>NumPy / SciPy</li>
+          <li>Pandas</li>
+          <li>Matplotlib</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-label">Engineering</div>
+        <ul class="skill-list">
+          <li>SolidWorks</li>
+          <li>Shapr3D</li>
+          <li>CNC Machining</li>
+          <li>3D Printing</li>
+          <li>Statics / MoM</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-label">Methods</div>
+        <ul class="skill-list">
+          <li>FEA / FD Schemes</li>
+          <li>PINNs</li>
+          <li>Statistical Testing</li>
+          <li>Sensor Fusion</li>
+          <li>Signal Processing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div class="hero-eyebrow" style="justify-content:center; margin-bottom:1rem;">Let's Connect</div>
+    <h2 class="fade-in">GET IN<br><span style="color:var(--red)">TOUCH</span></h2>
+    <p class="fade-in">
+      Currently seeking internship and full-time opportunities in mechanical engineering,
+      robotics, and applied ML. Open to research and industry roles alike.
+    </p>
+    <div class="contact-links fade-in">
+      <a href="mailto:aung.16@osu.edu" class="btn btn-primary">aung.16@osu.edu</a>
+      <a href="https://github.com/PonAppliedPhysics" target="_blank" class="btn btn-secondary">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/pon-aung-a10a6725b" target="_blank" class="btn btn-secondary">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Pon Aung</span> — The Ohio State University</p>
+  <p>Physics BS · College of Engineering</p>
+</footer>
+
+<script>
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Stagger project cards
+  document.querySelectorAll('.project-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 60}ms`;
+  });
+
+  // Lightbox
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
