@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pon Aung — Portfolio</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --navy: #1a1a1a;
@@ -21,9 +23,15 @@
     --display: 'Bebas Neue', sans-serif;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 
   body {
     background: var(--navy);
@@ -33,7 +41,6 @@
     overflow-x: hidden;
   }
 
-  /* ─── NOISE TEXTURE ─── */
   body::before {
     content: '';
     position: fixed;
@@ -45,10 +52,11 @@
     opacity: 0.6;
   }
 
-  /* ─── NAV ─── */
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
     display: flex;
     align-items: center;
@@ -83,9 +91,10 @@
     transition: color 0.2s;
   }
 
-  .nav-links a:hover { color: var(--off-white); }
+  .nav-links a:hover {
+    color: var(--off-white);
+  }
 
-  /* ─── HERO ─── */
   #hero {
     min-height: 100vh;
     display: grid;
@@ -118,7 +127,11 @@
     mask-image: radial-gradient(ellipse at 80% 50%, black 30%, transparent 70%);
   }
 
-  .hero-left { position: relative; z-index: 2; }
+  .hero-left {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
 
   .hero-eyebrow {
     font-family: var(--mono);
@@ -149,7 +162,9 @@
     color: var(--off-white);
   }
 
-  h1 span { color: var(--red); }
+  h1 span {
+    color: var(--red);
+  }
 
   .hero-desc {
     font-size: 1rem;
@@ -176,7 +191,11 @@
     text-transform: uppercase;
   }
 
-  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
   .btn {
     font-family: var(--mono);
@@ -196,7 +215,9 @@
     color: #fff;
   }
 
-  .btn-primary:hover { background: #a50e26; }
+  .btn-primary:hover {
+    background: #a50e26;
+  }
 
   .btn-secondary {
     background: transparent;
@@ -209,7 +230,6 @@
     background: rgba(232,228,220,0.05);
   }
 
-  /* Hero right panel */
   .hero-right {
     position: relative;
     z-index: 2;
@@ -246,8 +266,9 @@
     margin-top: 0.25rem;
   }
 
-  /* ─── SECTION BASICS ─── */
-  section { padding: 6rem 4rem; }
+  section {
+    padding: 6rem 4rem;
+  }
 
   .section-header {
     display: flex;
@@ -276,8 +297,9 @@
     background: var(--border);
   }
 
-  /* ─── PROJECTS ─── */
-  #projects { background: var(--navy2); }
+  #projects {
+    background: var(--navy2);
+  }
 
   .projects-grid {
     display: grid;
@@ -299,15 +321,21 @@
   .project-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 3px;
     height: 0;
     background: var(--red);
     transition: height 0.3s ease;
   }
 
-  .project-card:hover { background: #1a2438; }
-  .project-card:hover::before { height: 100%; }
+  .project-card:hover {
+    background: #1a2438;
+  }
+
+  .project-card:hover::before {
+    height: 100%;
+  }
 
   .project-card-num {
     font-family: var(--display);
@@ -318,7 +346,9 @@
     transition: color 0.3s;
   }
 
-  .project-card:hover .project-card-num { color: rgba(200,16,46,0.2); }
+  .project-card:hover .project-card-num {
+    color: rgba(200,16,46,0.2);
+  }
 
   .project-card-type {
     font-family: var(--mono);
@@ -362,15 +392,16 @@
     border: 1px solid rgba(200,16,46,0.2);
   }
 
-  /* ─── CAD GALLERY ─── */
-  #cad { background: var(--navy); }
+  #cad {
+    background: var(--navy);
+  }
 
   .cad-intro {
     font-size: 0.95rem;
     line-height: 1.7;
     color: var(--muted);
     max-width: 680px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   .cad-gallery {
@@ -465,7 +496,6 @@
     color: var(--muted);
   }
 
-  /* ─── CAD LIGHTBOX ─── */
   .lightbox {
     display: none;
     position: fixed;
@@ -478,7 +508,9 @@
     cursor: zoom-out;
   }
 
-  .lightbox.active { display: flex; }
+  .lightbox.active {
+    display: flex;
+  }
 
   .lightbox img {
     max-width: 90vw;
@@ -503,9 +535,10 @@
     transition: color 0.2s;
   }
 
-  .lightbox-close:hover { color: var(--off-white); }
+  .lightbox-close:hover {
+    color: var(--off-white);
+  }
 
-  /* ─── ABOUT ─── */
   #about {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -520,7 +553,10 @@
     margin-bottom: 1.2rem;
   }
 
-  .about-body p strong { color: var(--off-white); font-weight: 500; }
+  .about-body p strong {
+    color: var(--off-white);
+    font-weight: 500;
+  }
 
   .skills-grid {
     display: grid;
@@ -561,14 +597,16 @@
     font-size: 0.6rem;
   }
 
-  /* ─── CONTACT ─── */
   #contact {
     background: var(--navy2);
     text-align: center;
     padding: 7rem 4rem;
   }
 
-  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 
   .contact-inner h2 {
     font-size: clamp(3rem, 6vw, 5rem);
@@ -589,7 +627,6 @@
     flex-wrap: wrap;
   }
 
-  /* ─── FOOTER ─── */
   footer {
     padding: 2rem 4rem;
     border-top: 1px solid var(--border);
@@ -605,12 +642,20 @@
     letter-spacing: 0.1em;
   }
 
-  footer span { color: var(--red); }
+  footer span {
+    color: var(--red);
+  }
 
-  /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .fade-in {
@@ -624,33 +669,65 @@
     transform: translateY(0);
   }
 
-  .hero-left { animation: fadeUp 0.7s ease 0.1s both; }
-
-  /* ─── MOBILE ─── */
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
-    .hero-right { padding-left: 0; }
-    section { padding: 4rem 1.5rem; }
-    #about { grid-template-columns: 1fr; gap: 3rem; }
-    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .cad-gallery { grid-template-columns: 1fr; }
-    .cad-item.wide { grid-column: span 1; }
+    nav {
+      padding: 1rem 1.5rem;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    #hero {
+      grid-template-columns: 1fr;
+      padding: 7rem 1.5rem 3rem;
+      gap: 3rem;
+    }
+
+    .hero-right {
+      padding-left: 0;
+    }
+
+    section {
+      padding: 4rem 1.5rem;
+    }
+
+    #about {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cad-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .cad-item.wide {
+      grid-column: span 1;
+    }
   }
 </style>
 </head>
+
 <body>
 
 <nav>
   <div class="nav-logo">PA — Portfolio</div>
+
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#cad">CAD</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://github.com/PonAppliedPhysics/PonAppliedPhysics.github.io/tree/main/images" target="_blank">Images Folder ↗</a></li>
     <li><a href="Engineering_Portfolio.pdf" target="_blank">Full PDF ↗</a></li>
   </ul>
 </nav>
@@ -661,17 +738,21 @@
 
   <div class="hero-left">
     <div class="hero-eyebrow">The Ohio State University</div>
+
     <h1>PON<br><span>AUNG</span></h1>
+
     <p class="hero-desc">
       Physics student and engineer building at the intersection of
       experimental physics, mechanical design, and machine learning.
     </p>
+
     <div class="hero-tags">
       <span class="tag">Mechanical Engineering</span>
       <span class="tag">Robotics</span>
       <span class="tag">Data Science</span>
       <span class="tag">ML / AI</span>
     </div>
+
     <div class="hero-ctas">
       <a href="#projects" class="btn btn-primary">View Projects</a>
       <a href="Engineering_Portfolio.pdf" target="_blank" class="btn btn-secondary">Download Portfolio</a>
@@ -683,14 +764,17 @@
       <div class="stat-num">6</div>
       <div class="stat-label">Portfolio Projects</div>
     </div>
+
     <div class="stat-block">
       <div class="stat-num">OSU</div>
       <div class="stat-label">Physics BS — College of Engineering</div>
     </div>
+
     <div class="stat-block">
       <div class="stat-num">ML</div>
       <div class="stat-label">Python · TensorFlow · scikit-learn</div>
     </div>
+
     <div class="stat-block">
       <div class="stat-num">CAD</div>
       <div class="stat-label">SolidWorks · Shapr3D · Machining</div>
@@ -749,7 +833,7 @@
       <p>
         End-to-end ML pipeline on 50+ years of Columbus NOAA data. Engineered 12 temporal
         features and compared Ridge Regression vs. Random Forest — achieving R² = 0.82 with
-        the top feature (TMAX_roll7) carrying 66.9% of importance.
+        the top feature TMAX_roll7 carrying 66.9% of importance.
       </p>
       <div class="project-tags">
         <span class="project-tag">Python</span>
@@ -783,8 +867,8 @@
       <h3>Thermal Conductivity Modeling — PINNs</h3>
       <p>
         Modeled 1D heat diffusion in a copper rod across 5 progressive models: analytic Fourier
-        series → finite-difference (FTCS) → SciPy-optimized → Physics-Informed Neural Network.
-        PINN recovered thermal diffusivity as a learned parameter (MAE = 0.42°C).
+        series → finite-difference FTCS → SciPy-optimized → Physics-Informed Neural Network.
+        PINN recovered thermal diffusivity as a learned parameter with MAE = 0.42°C.
       </p>
       <div class="project-tags">
         <span class="project-tag">TensorFlow</span>
@@ -827,12 +911,6 @@
     product design, and GD&T-style technical drawings created in SolidWorks. Click any drawing to view full-size.
   </p>
 
-  <div class="fade-in" style="margin-bottom: 3rem;">
-    <a href="https://github.com/PonAppliedPhysics/PonAppliedPhysics.github.io/tree/main/images" target="_blank" class="btn btn-secondary">
-      Browse All CAD Assets on GitHub ↗
-    </a>
-  </div>
-
   <div class="cad-gallery">
 
     <div class="cad-item wide fade-in">
@@ -843,7 +921,10 @@
       <div class="cad-caption">
         <div class="cad-caption-type">Assembly Drawing · SolidWorks</div>
         <h3>Foot Subassembly</h3>
-        <p>Three-part assembly drawing with BOM (foot blade, foot tube, foot stem). Fully dimensioned with true radii callouts, diameters, and isometric views. Scale 1:10.</p>
+        <p>
+          Three-part assembly drawing with BOM: foot blade, foot tube, and foot stem.
+          Fully dimensioned with true radii callouts, diameters, and isometric views. Scale 1:10.
+        </p>
       </div>
     </div>
 
@@ -855,7 +936,10 @@
       <div class="cad-caption">
         <div class="cad-caption-type">Product Design · Exploded Assembly</div>
         <h3>Vibrating Pillow Sleeve Alarm Clock</h3>
-        <p>Exploded view with bill of materials — Arduino-controlled micro vibration motors, 9V battery system, and acrylic enclosure. First-year engineering group project.</p>
+        <p>
+          Exploded view with bill of materials — Arduino-controlled micro vibration motors,
+          9V battery system, and acrylic enclosure. First-year engineering group project.
+        </p>
       </div>
     </div>
 
@@ -867,7 +951,10 @@
       <div class="cad-caption">
         <div class="cad-caption-type">Product Design · Orthographic Views</div>
         <h3>Pillow Sleeve — Multi-View Drawing</h3>
-        <p>Front, side, top, and isometric views with overall dimensions (36.99 × 19.86 × 6.16 in). Scale 1:8.</p>
+        <p>
+          Front, side, top, and isometric views with overall dimensions:
+          36.99 × 19.86 × 6.16 in. Scale 1:8.
+        </p>
       </div>
     </div>
 
@@ -879,7 +966,11 @@
       <div class="cad-caption">
         <div class="cad-caption-type">Technical Drawing · Dual Symmetry</div>
         <h3>Square E-Bracket</h3>
-        <p>Part symmetric about planes A-A and B-B. Features R0.50 fillets, countersunk ⌀0.75 thru-holes, and R1.50 rounded profiles. Three-view + isometric projection.</p>
+        <p>
+          Part symmetric about planes A-A and B-B. Features R0.50 fillets,
+          countersunk ⌀0.75 thru-holes, and R1.50 rounded profiles.
+          Three-view plus isometric projection.
+        </p>
       </div>
     </div>
 
@@ -897,16 +988,19 @@
       <span class="section-num">03</span>
       <h2>ABOUT</h2>
     </div>
+
     <div class="about-body fade-in">
       <p>
         I'm a <strong>Physics BS student at The Ohio State University</strong> in the College of Engineering,
         with coursework spanning experimental physics, optics, quantum mechanics, and mechanical engineering.
       </p>
+
       <p>
         My work lives at the boundary between physical theory and practical engineering — whether that's
         building sensor validation pipelines for Honda's factory floor, machining AUV parts in the campus
         machine shop, or implementing neural networks that satisfy PDEs as physics constraints.
       </p>
+
       <p>
         I'm particularly interested in <strong>mechanical engineering, robotics, data science, and ML/AI</strong>
         applied to real physical systems — problems where getting the physics right actually matters.
@@ -919,6 +1013,7 @@
       <span class="section-num">04</span>
       <h2>SKILLS</h2>
     </div>
+
     <div class="skills-grid">
       <div>
         <div class="skill-group-label">Languages</div>
@@ -928,6 +1023,7 @@
           <li>LaTeX</li>
         </ul>
       </div>
+
       <div>
         <div class="skill-group-label">Libraries</div>
         <ul class="skill-list">
@@ -938,6 +1034,7 @@
           <li>Matplotlib</li>
         </ul>
       </div>
+
       <div>
         <div class="skill-group-label">Engineering</div>
         <ul class="skill-list">
@@ -948,6 +1045,7 @@
           <li>Statics / MoM</li>
         </ul>
       </div>
+
       <div>
         <div class="skill-group-label">Methods</div>
         <ul class="skill-list">
@@ -965,11 +1063,14 @@
 <section id="contact">
   <div class="contact-inner">
     <div class="hero-eyebrow" style="justify-content:center; margin-bottom:1rem;">Let's Connect</div>
+
     <h2 class="fade-in">GET IN<br><span style="color:var(--red)">TOUCH</span></h2>
+
     <p class="fade-in">
       Currently seeking internship and full-time opportunities in mechanical engineering,
       robotics, and applied ML. Open to research and industry roles alike.
     </p>
+
     <div class="contact-links fade-in">
       <a href="mailto:aung.16@osu.edu" class="btn btn-primary">aung.16@osu.edu</a>
       <a href="https://github.com/PonAppliedPhysics" target="_blank" class="btn btn-secondary">GitHub ↗</a>
@@ -984,7 +1085,6 @@
 </footer>
 
 <script>
-  // Scroll-triggered fade-in
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
@@ -995,12 +1095,10 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Stagger project cards
   document.querySelectorAll('.project-card').forEach((card, i) => {
     card.style.transitionDelay = `${i * 60}ms`;
   });
 
-  // Lightbox
   function openLightbox(el) {
     const img = el.querySelector('img');
     document.getElementById('lightbox-img').src = img.src;
