@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,nosnippet,noimageindex"><meta property="og:title" content="Tori"><meta property="og:description" content=""><title>Tori</title><style>*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px;background:#fff1f4;color:#4c2632;font-family:Georgia,serif}main{max-width:360px;width:100%;text-align:center}h1{font-weight:400;font-size:38px;line-height:1.15}label{display:block;font:16px system-ui;text-align:left;margin-bottom:10px}input,button{width:100%;font:16px system-ui;padding:16px;border-radius:14px}input{border:1px solid #e0c6cf;background:white}button{margin-top:16px;background:#ab3356;color:white;border:0;min-height:52px}p{font:16px/1.5 system-ui}button:disabled{opacity:.7}.heart{font-size:48px;color:#ab3356}</style></head><body><main><div class="heart" aria-hidden="true">♡</div><h1>For Tori</h1><form id="unlock"><label for="password">Your password</label><input type="password" id="password" required autocomplete="off" autocapitalize="none" spellcheck="false"><button id="open" type="submit">Open</button></form><p id="status" role="status"></p></main><script>
+const expires = Date.parse('2026-11-23T00:00:00-05:00');
+const statusText = document.getElementById('status');
+const form = document.getElementById('unlock');
+function checkExpiry() {
+ if (Date.now() < expires) return false;
+ form.hidden = true;
+ statusText.textContent = 'This invitation has closed.';
+ return true;
+}
+checkExpiry();
+setInterval(checkExpiry, 1000);
+form.addEventListener('submit', async event => {
+ event.preventDefault();
+ if (checkExpiry()) return;
+ const button = document.getElementById('open');
+ button.disabled = true;
+ statusText.textContent = 'Opening…';
+ let payload;
+ try {
+  const response = await fetch('invitation.bin', {cache:'no-store'});
+  if (!response.ok) throw new Error('Unavailable');
+  payload = new Uint8Array(await response.arrayBuffer());
+ } catch {
+  statusText.textContent = 'The invitation could not load. Please try again.';
+  button.disabled = false;
+  return;
+ }
+ try {
+  const password = document.getElementById('password').value;
+  const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name:'PBKDF2',salt:payload.slice(0,16),iterations:600000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);
+  const compressed = await crypto.subtle.decrypt({name:'AES-GCM',iv:payload.slice(16,28)},key,payload.slice(28));
+  const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
+  const html = await new Response(stream).text();
+  if (checkExpiry()) return;
+  document.open(); document.write(html); document.close();
+ } catch {
+  statusText.textContent = 'That password didn’t open it. Please try again.';
+  button.disabled = false;
+ }
+});
+</script></body></html>
